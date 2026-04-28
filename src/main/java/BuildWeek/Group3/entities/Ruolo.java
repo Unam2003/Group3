@@ -1,22 +1,26 @@
 package BuildWeek.Group3.entities;
-import jakarta.persistence.*;
-import lombok.Data;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
-@Data
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "ruoli")
 public class Ruolo {
-
     @Id
-    @GeneratedValue
-    @Column(name = "id_ruolo")
-    private UUID id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ruolo_id")
+    private long ruoloId;
+    @Column(nullable = false)
     private String tipo;
 
-    @ManyToMany(mappedBy = "ruoli")
-    private Set<Utente> utenti = new HashSet<>();
+    public Ruolo(String tipo) {
+        this.tipo = tipo;
+    }
 }
