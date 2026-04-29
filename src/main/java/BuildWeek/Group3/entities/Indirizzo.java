@@ -14,7 +14,7 @@ public class Indirizzo {
     private UUID id;
     private String via;
     private String civico;
-    private String località;
+    private String localita;
     private String cap;
 
     @Column(name = "tipo_indirizzo")
