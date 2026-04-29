@@ -1,5 +1,9 @@
 package BuildWeek.Group3.tools;
 
+import BuildWeek.Group3.entities.Utente;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.JsonNode;
+import kong.unirest.core.Unirest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,15 +17,15 @@ public class EmailSender {
         this.apiKey = apiKey;
     }
 
-//    public void sendRegistrationEmail(Utente recipient) {
-//        HttpResponse<JsonNode> response = Unirest.post("https://api.mailgun.net/v3/" + this.domainName + "/messages")
-//                .basicAuth("api", this.apiKey)
-//                .queryString("from", "")
-//                .queryString("to", recipient.getEmail())
-//                .queryString("subject", "Benvenuto sulla nostra piattaforma!")
-//                .queryString("text", "Ciao " + recipient.getNome() + ", la tua registrazione è andata a buon fine!")
-//                .asJson();
-//
-//        System.out.println(response.getBody());
-//    }
+    public void sendRegistrationEmail(Utente recipient) {
+        HttpResponse<JsonNode> response = Unirest.post("https://api.mailgun.net/v3/" + this.domainName + "/messages")
+                .basicAuth("api", this.apiKey)
+                .queryString("from", "")
+                .queryString("to", recipient.getEmail())
+                .queryString("subject", "Benvenuto sulla nostra piattaforma!")
+                .queryString("text", "Ciao " + recipient.getNome() + ", la tua registrazione è andata a buon fine!")
+                .asJson();
+
+        System.out.println(response.getBody());
+    }
 }
