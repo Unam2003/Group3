@@ -8,11 +8,11 @@ import java.util.UUID;
 
 public interface ProvinciaRepository extends JpaRepository<Provincia, UUID> {
 
-    Optional<Provincia> findByNome(String nome);
+    Optional<Provincia> findByNomeProvincia(String nome);
 
     Optional<Provincia> findBySigla(String sigla);
 
-    boolean existsByNome(String nome);
+    boolean existsByNomeProvincia(String nome);
 
     boolean existsBySigla(String sigla);
 }
