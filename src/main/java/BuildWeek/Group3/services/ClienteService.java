@@ -5,11 +5,12 @@ import BuildWeek.Group3.exceptions.BadRequestException;
 import BuildWeek.Group3.exceptions.NotFoundException;
 import BuildWeek.Group3.payloads.NewClienteDTO;
 import BuildWeek.Group3.repositories.ClienteRepository;
-import kong.unirest.core.Client;
+import BuildWeek.Group3.specifications.ClienteSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -97,6 +98,26 @@ public class ClienteService {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortyBy));
         return clienteRepository.findAll(pageable);
+    }
+
+    public Page<Cliente> findAllFiltered(int page, int size, String sortBy, String nome, Double fatturatoMin, Double fatturatoMax, LocalDate dataInserimento, LocalDate dataUltimoContatto) {
+        if (size > 100) size = 100;
+
+        Specification<Cliente> specification = Specification.where(ClienteSpecification.ragioneSocialeContiene(nome))
+                .and(ClienteSpecification.fatturatoMaggioreUguale(fatturatoMin))
+                .and(ClienteSpecification.fatturatoMinoreUguale(fatturatoMax))
+                .and(ClienteSpecification.dataInserimentoUguale(dataInserimento))
+                .and(ClienteSpecification.dataUltimoContattoUguale(dataUltimoContatto));
+
+        if (sortBy.equalsIgnoreCase("provinciaSedeLegale")) {
+            specification = specification.and(ClienteSpecification.ordinaPerProvinciaSedeLegale());
+            Pageable pageable = PageRequest.of(page, size);
+            return clienteRepository.findAll(specification, pageable);
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+
+        return  clienteRepository.findAll(specification, pageable);
     }
 
 }

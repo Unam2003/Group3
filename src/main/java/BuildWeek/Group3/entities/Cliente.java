@@ -1,10 +1,12 @@
 package BuildWeek.Group3.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -61,4 +63,9 @@ public class Cliente {
     @Enumerated(EnumType.STRING)
     @Column (name = "tipo_cliente", nullable = false)
     private TipoCliente tipoCliente;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "cliente")
+    private List<Indirizzo> indirizzi;
 }

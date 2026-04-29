@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
@@ -25,9 +26,14 @@ public class ClienteController {
     public Page<Cliente> getClienti(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "ragioneSociale") String sortBy
+            @RequestParam(defaultValue = "ragioneSociale") String sortBy,
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) Double fatturatoMin,
+            @RequestParam(required = false) Double fatturatoMax,
+            @RequestParam(required = false) LocalDate dataInserimento,
+            @RequestParam(required = false) LocalDate dataUltimoContatto
     ){
-        return clienteService.findAll(page, size, sortBy);
+        return clienteService.findAllFiltered(page, size, sortBy, nome, fatturatoMin, fatturatoMax, dataInserimento, dataUltimoContatto);
     }
 
     @GetMapping("/{idCliente}")

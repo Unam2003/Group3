@@ -22,7 +22,7 @@ public class IndirizzoService {
 
         Cliente cliente = clienteRepository.findById(dto.clienteId()).orElseThrow(() -> new RuntimeException("Cliente non trovato"));
 
-        Comune comune = comuneRepository.findById(dto.comuneId()).orElseThrow(() -> new RuntimeException("Comune non trovato"));Indirizzo indirizzo = new Indirizzo();indirizzo.setVia(dto.via());indirizzo.setCivico(dto.civico());indirizzo.setLocalità(dto.localita());indirizzo.setCap(dto.cap());indirizzo.setTipoIndirizzo(dto.tipoIndirizzo());indirizzo.setCliente(cliente);indirizzo.setComune(comune);
+        Comune comune = comuneRepository.findById(dto.comuneId()).orElseThrow(() -> new RuntimeException("Comune non trovato"));Indirizzo indirizzo = new Indirizzo();indirizzo.setVia(dto.via());indirizzo.setCivico(dto.civico());indirizzo.setLocalita(dto.localita());indirizzo.setCap(dto.cap());indirizzo.setTipoIndirizzo(dto.tipoIndirizzo());indirizzo.setCliente(cliente);indirizzo.setComune(comune);
 
         return indirizzoRepository.save(indirizzo);
     }
@@ -42,7 +42,7 @@ public class IndirizzoService {
 
         indirizzo.setVia(dto.via());
         indirizzo.setCivico(dto.civico());
-        indirizzo.setLocalità(dto.localita());
+        indirizzo.setLocalita(dto.localita());
         indirizzo.setCap(dto.cap());
         indirizzo.setTipoIndirizzo(dto.tipoIndirizzo());
         indirizzo.setCliente(cliente);
