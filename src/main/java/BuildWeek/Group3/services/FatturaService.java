@@ -1,4 +1,4 @@
-package BuildWeek.Group3.service;
+package BuildWeek.Group3.services;
 
 import BuildWeek.Group3.entities.*;
 import BuildWeek.Group3.payloads.FatturaDTO;
