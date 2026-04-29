@@ -5,6 +5,7 @@ import BuildWeek.Group3.payloads.ClienteRespDTO;
 import BuildWeek.Group3.payloads.NewClienteDTO;
 import BuildWeek.Group3.services.ClienteService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,15 @@ public class ClienteController {
 
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
+    }
+
+    @GetMapping
+    public Page<Cliente> getClienti(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "ragioneSociale") String sortBy
+    ){
+        return clienteService.findAll(page, size, sortBy);
     }
 
     @GetMapping("/{idCliente}")
