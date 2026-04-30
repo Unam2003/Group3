@@ -4,9 +4,6 @@ import jakarta.validation.constraints.*;
 import java.util.UUID;
 
 public record IndirizzoDTO(
-        @NotNull
-        UUID id,
-
         @NotBlank(message = "La via è obbligatoria")
         String via,
 

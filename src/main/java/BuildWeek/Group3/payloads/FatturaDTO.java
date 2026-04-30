@@ -5,9 +5,6 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record FatturaDTO(
-        @NotNull
-        UUID id,
-
         @NotBlank(message = "Il numero fattura è obbligatorio")
         String numero,
 

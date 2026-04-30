@@ -58,8 +58,7 @@ public class ClienteSpecification {
             Join<Indirizzo, Comune> comune = indirizzo.join("comune", JoinType.LEFT);
             Join<Comune, Provincia> provincia = comune.join("provincia", JoinType.LEFT);
 
-            query.orderBy(criteriaBuilder.asc(provincia.get("nomeProvincia")));
-            query.distinct(true);
+            query.orderBy(criteriaBuilder.asc(provincia.get("nomeProvincia")), criteriaBuilder.asc(cliente.get("ragioneSociale")));
 
             return criteriaBuilder.equal(indirizzo.get("tipoIndirizzo"), "SEDE_LEGALE");
         };
