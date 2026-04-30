@@ -38,8 +38,8 @@ public void importProvince(String path) {
         while ((row = reader.readNext())!= null) {
             totali++;
             try {
-                String nome = row[0].trim();
-                String sigla = row[1].trim();
+                String sigla = row[0].trim();
+                String nome = row[1].trim();
                 if (nome.isEmpty() || sigla.isEmpty()) {
                     throw new RuntimeException("campi da inserire obbligatoriamente");
                 }
@@ -66,7 +66,7 @@ public void importProvince(String path) {
         int errori = 0;
 
         try (CSVReader reader = new CSVReaderBuilder(
-                new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))
+                new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8)).withSkipLines(1)
                 .withCSVParser(new CSVParserBuilder()
                         .withSeparator(';')
                         .build())
