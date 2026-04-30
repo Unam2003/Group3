@@ -3,7 +3,13 @@ package BuildWeek.Group3.services;
 import BuildWeek.Group3.entities.*;
 import BuildWeek.Group3.payloads.FatturaDTO;
 import BuildWeek.Group3.repositories.*;
+import BuildWeek.Group3.specifications.FatturaSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -83,5 +89,20 @@ public class FatturaService {
 
     public List<Fattura> findByRangeImporto(Double min, Double max) {
         return fatturaRepository.findByImportoBetween(min, max);
+    }
+
+    public Page<Fattura> findAllFiltered(int page, int size, String sortBy, UUID idCliente, UUID idStato, LocalDate data, Integer anno, Double importoMin, Double importoMax) {
+        if (size > 100) size = 100;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+
+        Specification<Fattura> specification = Specification.where(FatturaSpecification.clienteUguale(idCliente))
+                .and(FatturaSpecification.statoUguale(idStato))
+                .and(FatturaSpecification.dataUguale(data))
+                .and(FatturaSpecification.annoUguale(anno))
+                .and(FatturaSpecification.importoMaggioreUguale(importoMin))
+                .and(FatturaSpecification.importoMinoreUguale(importoMax));
+
+        return fatturaRepository.findAll(specification, pageable);
     }
 }

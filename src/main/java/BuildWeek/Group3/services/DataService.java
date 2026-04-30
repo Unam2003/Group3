@@ -86,7 +86,7 @@ public void importProvince(String path) {
                     }
 
                     Provincia provincia = provinciaRepository
-                            .findByNome(nomeProvincia)
+                            .findByNomeProvincia(nomeProvincia)
                             .orElseThrow(() ->
                                     new RuntimeException("Provincia non trovata: " + nomeProvincia)
                             );

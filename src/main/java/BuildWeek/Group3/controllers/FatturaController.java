@@ -4,6 +4,8 @@ import BuildWeek.Group3.entities.Fattura;
 import BuildWeek.Group3.payloads.FatturaDTO;
 import BuildWeek.Group3.services.FatturaService;
 import jakarta.validation.Valid;
+import org.springframework.cglib.core.Local;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
@@ -27,9 +29,20 @@ public class FatturaController {
     }
 
     @GetMapping
-    public List<Fattura> findAll() {
-        return fatturaService.findAll();
+    public Page<Fattura> getFatture(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "data") String sortBy,
+            @RequestParam(required = false) UUID idCliente,
+            @RequestParam(required = false) UUID idStato,
+            @RequestParam(required = false) LocalDate data,
+            @RequestParam(required = false) Integer anno,
+            @RequestParam(required = false) Double importoMin,
+            @RequestParam(required = false) Double importoMax
+            ) {
+        return fatturaService.findAllFiltered(page, size, sortBy, idCliente, idStato, data, anno, importoMin, importoMax);
     }
+
     @GetMapping("/{id}")
     public Fattura findById(@PathVariable UUID id) {
         return fatturaService.findById(id);
