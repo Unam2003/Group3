@@ -34,4 +34,10 @@ public class ErrorsHandler {
     public ErrorsDTO handleBadRequest(BadRequestException ex) {
         return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
     }
+
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorsDTO handleValidationException(ValidationException ex) {
+        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+    }
 }
