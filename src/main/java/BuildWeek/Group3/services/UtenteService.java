@@ -103,14 +103,19 @@ public class UtenteService {
 
     }
 
-    public void avatarUpload(MultipartFile file, UUID dipendenteId) {
+    public void avatarUpload(MultipartFile file, UUID utenteId) {
         try {
+            Utente found = this.findById(utenteId);
+
             Map result = cloudinaryUploader.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
             String url = (String) result.get("secure_url");
-            System.out.println(url);
+
+            found.setAvatarURL(url);
+            this.utenteRepository.save(found);
+            log.info("Avatar aggiornato per l'utente con id " + utenteId);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new BadRequestException("Errore nel caricamento del file!");
         }
     }
 

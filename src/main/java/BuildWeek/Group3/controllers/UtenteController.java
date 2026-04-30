@@ -37,13 +37,13 @@ public class UtenteController {
         this.utenteService.findByIdAndDelete(currentAuthenticatedUser.getUtenteId());
     }
 
-    @PatchMapping("/me")
-    public void uploadAvatar(@RequestParam("profile_picture") MultipartFile file, @PathVariable UUID utenteId) {
+    @PatchMapping("/me/avatar")
+    public void uploadAvatar(@AuthenticationPrincipal Utente currentAuthenticatedUser, @RequestParam("profile_picture") MultipartFile file) {
         System.out.println(file.getOriginalFilename());
         System.out.println(file.getSize());
         System.out.println(file.getContentType());
 
-        this.utenteService.avatarUpload(file, utenteId);
+        this.utenteService.avatarUpload(file, currentAuthenticatedUser.getUtenteId());
     }
 
 
