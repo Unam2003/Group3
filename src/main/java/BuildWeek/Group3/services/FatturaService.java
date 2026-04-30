@@ -6,6 +6,7 @@ import BuildWeek.Group3.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,14 +15,14 @@ public class FatturaService {
 
     @Autowired
     private FatturaRepository fatturaRepository;
-//TODO CLIENTE
+
     @Autowired
     private ClienteRepository clienteRepository;
 
     @Autowired
     private StatoFatturaRepository statoFatturaRepository;
 
-    //TODO CI SONO ANCHE CREATE ECC PER CLIENTE, CHE MANCA
+
     public Fattura create(FatturaDTO body) {
 
         Cliente cliente = clienteRepository.findById(body.clienteId())
@@ -44,7 +45,9 @@ public class FatturaService {
         return fatturaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fattura non trovata"));
     }
-
+    public List<Fattura> findByData(LocalDate data) {
+        return fatturaRepository.findByData(data);
+    }
     public Fattura update(UUID id, FatturaDTO body) {
 
         Fattura fattura = findById(id);
@@ -68,6 +71,14 @@ public class FatturaService {
 
     public List<Fattura> findByStato(UUID statoId) {
         return fatturaRepository.findByStatoFattura_Id(statoId);
+    }
+
+    public List<Fattura> findByAnno(int anno) {
+
+        LocalDate start = LocalDate.of(anno, 1, 1);
+        LocalDate end = LocalDate.of(anno, 12, 31);
+
+        return fatturaRepository.findByDataBetween(start, end);
     }
 
     public List<Fattura> findByRangeImporto(Double min, Double max) {
